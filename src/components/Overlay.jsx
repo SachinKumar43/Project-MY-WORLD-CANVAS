@@ -12,8 +12,8 @@ const Section = (props) => {
         opacity: props.opacity,
       }}
     >
-      <div className="w-1/2 flex items-center justify-center">
-        <div className="max-w-sm w-full">
+      <div className="w-1/3 flex items-center justify-center">
+        <div className="max-w-lg w-full">
           <div className="bg-white  rounded-lg px-8 py-12">
             {props.children}
           </div>
@@ -50,11 +50,18 @@ export const Overlay = () => {
             <li>🎮 Gamer</li>
             <li>✍ Digital Artist</li>
           </ul>
+          <br></br>
+          <p>
+            As a committed and passionate computer science student, I possess a
+            robust understanding of programming, software development, and
+            digital artistry. My journey has equipped me with a diverse set of
+            skills and experiences, allowing me to excel in various
+            technological domains.I am driven by a desire to leave a
+            <span style={{ color: "red" }}> mark</span> on this world
+          </p>
         </Section>{" "}
         <Section right opacity={opacitySecondSection}>
-          <h1 className="font-semibold font-serif text-2xl">
-            Here are my skillsets 🔥
-          </h1>
+          <h1 className="font-semibold font-serif text-2xl">Work Experience</h1>
           <p className="text-gray-500">
             <a
               target="_blank"
@@ -64,7 +71,20 @@ export const Overlay = () => {
             </a>
           </p>
           <p className="mt-3"></p>
-          <ul className="leading-9">
+          <p>
+            Software Developer at Nyalazone Solutions Pvt Ltd <br></br>
+            <span style={{ color: "gray", fontStyle: "italic" }}>
+              May 2024 – Aug 2024
+            </span>{" "}
+            <br></br>
+            <br></br>I develop and maintain full applications using Angular,
+            contributing to both front-end and back-end development. I use
+            Python to streamline data import and connection to our databases,
+            and handle organizing and optimizing data to ensure accuracy and
+            efficiency. My role involves designing and implementing features
+            that enhance user experience and functionality.
+          </p>
+          {/* <ul className="leading-9">
             <li>Java</li>
             <li>C</li>
             <li>C++</li>
@@ -73,18 +93,38 @@ export const Overlay = () => {
             <li>Javascript</li>
             <li>React</li>
             <li>ThreeJS</li>
-          </ul>
+          </ul> */}
         </Section>
         <Section opacity={opacityLastSection}>
           <h1 className="font-semibold font-serif text-2xl">
-            My Contact Info?
+            Contact Information
           </h1>
-          <p className="text-gray-500">I monitor my emails very often</p>
+          <p className="text-gray-500">
+            <a
+              href="https://www.linkedin.com/in/sachin-kumar-7ab3b9216/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Click HERE to connect with me on LinkedIn
+            </a>
+          </p>
           <p className="mt-6 p-3 bg-slate-200 rounded-lg">
             📩 <a href="mailto:sachin43@my.yorku.ca">sachin43@my.yorku.ca</a>
           </p>
           <p className="mt-6 p-3 bg-slate-200 rounded-lg">
             📞 <a href="">+1 (647)-870-2736</a>
+          </p>
+          <br></br>
+          <p>
+            As I reflect on my professional journey and the insights gained
+            through various projects and experiences, I value open communication
+            and critical dialogue. I believe that constructive feedback and
+            thoughtful discussions are integral to personal and professional
+            growth. Therefore, I am always eager to engage in conversations that
+            challenge my perspectives and foster collaborative learning.
+            <br></br>
+            <br></br> I look forward to connecting and discussing any potential
+            opportunities or collaborations!
           </p>
         </Section>
       </div>
