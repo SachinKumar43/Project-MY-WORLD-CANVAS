@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^9.102.3",
     "@react-three/fiber": "^8.15.19",
+    "framer-motion": "^12.23.12",
     "gsap": "^3.12.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,6 +32,6 @@
     "vite": "^5.1.6"
   },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   }
 }
