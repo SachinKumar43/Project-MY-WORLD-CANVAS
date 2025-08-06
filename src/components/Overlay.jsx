@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Scroll, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Section = (props) => {
   return (
@@ -14,27 +15,51 @@ const Section = (props) => {
     >
       <div className="w-1/3 flex items-center justify-center">
         <div className="max-w-lg w-full">
-          <div className="bg-white rounded-lg px-8 py-12">{props.children}</div>
+          <div className="bg-white rounded-lg px-8 py-12 relative">
+            {props.children}
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-export const Overlay = () => {
-  const scroll = useScroll();
+const workExperiences = [
+  {
+    company: "Software QA Assistant at Ministry of Education, Ontario",
+    duration: "Sep 2024 – Apr 2025",
+    description:
+      "Independently created and optimized QA automation scripts using Microfocus UFT and ALM for PARIS (Program Approval & Registration Information System), reducing test execution time by 30% and improving overall system efficiency and reliability.",
+  },
+  {
+    company: "Software Developer at Nyalazone Solutions Pvt Ltd",
+    duration: "May 2024 – Aug 2024",
+    description:
+      "I developed and maintained full applications using Angular, contributing to both front-end and back-end development. Utilised Python to streamline data import and connection to our databases, and handled organizing and optimizing data to ensure accuracy and efficiency. My role involved designing and implementing features that enhance user experience and functionality.",
+  },
+];
+
+const transitionVariants = {
+  initial: { x: 50, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: -50, opacity: 0 },
+};
+
+export default function WorkExperienceSection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [opacityFirstSection, setOpacityFirstSection] = useState(1);
   const [opacitySecondSection, setOpacitySecondSection] = useState(1);
   const [opacityLastSection, setOpacityLastSection] = useState(1);
   const [showModal, setShowModal] = useState(false);
 
-  const handleModalOpen = () => {
-    setShowModal(true);
+  const scroll = useScroll();
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % workExperiences.length);
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
+  const handleModalOpen = () => setShowModal(true);
+  const handleModalClose = () => setShowModal(false);
 
   useFrame(() => {
     setOpacityFirstSection(1 - scroll.range(0, 1 / 3));
@@ -44,7 +69,8 @@ export const Overlay = () => {
 
   return (
     <Scroll html>
-      <div className="w-screen">
+      <div className="select-none w-screen">
+        {/* Intro Section */}
         <Section opacity={opacityFirstSection}>
           <h1 className="font-semibold font-serif text-2xl">
             Hello, I'm Sachin Kumar
@@ -63,49 +89,80 @@ export const Overlay = () => {
             robust understanding of programming, software development, and
             digital artistry. My journey has equipped me with a diverse set of
             skills and experiences, allowing me to excel in various
-            technological domains.I am driven by a desire to leave a
-            <span style={{ color: "red" }}> mark</span> on this world
+            technological domains. I am driven by a desire to leave a
+            <span style={{ color: "red" }}> mark</span> on this world.
           </p>
         </Section>
+
+        {/* Work Experience Section */}
         <Section right opacity={opacitySecondSection}>
-          <h1 className="font-semibold font-serif text-2xl">Work Experience</h1>
+          <h1 className="select-none font-semibold font-serif text-2xl">
+            Work Experience
+          </h1>
           <p className="text-gray-500">
             <a
               target="_blank"
-              href="https://drive.google.com/file/d/17THjdyf1mFPVrOA-Gvw484CkZkFVkWau/view"
+              href="https://drive.google.com/file/d/1CU4cCyK65OSIECf0bq2a7RxJIPm6SJED/view?usp=drive_link"
               rel="noopener noreferrer"
             >
               click HERE to view my resume!
             </a>
           </p>
-          <p className="mt-3"></p>
-          <p>
-            Software Developer at Nyalazone Solutions Pvt Ltd <br />
-            <span style={{ color: "gray", fontStyle: "italic" }}>
-              May 2024 – Aug 2024
-            </span>
-            <br />
-            <br />I develop and maintain full applications using Angular,
-            contributing to both front-end and back-end development. I use
-            Python to streamline data import and connection to our databases,
-            and handle organizing and optimizing data to ensure accuracy and
-            efficiency. My role involves designing and implementing features
-            that enhance user experience and functionality.
-          </p>
-          <div className="mt-5">
+
+          {/* Slideable Job Description */}
+          <div className="select-none relative min-h-[200px] mt-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={transitionVariants}
+                transition={{ duration: 0.4 }}
+                className="absolute w-full"
+              >
+                <p className="select-none text-sm">
+                  <p className="font-semibold">
+                    {workExperiences[currentIndex].company}
+                  </p>
+                  <span className="text-gray-500 italic text-xs">
+                    {workExperiences[currentIndex].duration}
+                  </span>
+                  <br />
+                  <br />
+                  {workExperiences[currentIndex].description}
+                </p>
+                <div className="mt-4 text-right">
+                  <button
+                    onClick={handleNext}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    {currentIndex === workExperiences.length - 1
+                      ? "Back"
+                      : "Next"}
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Footer Button */}
+          <div className="select-none mt-5">
             <button
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+              className="select-none bg-blue-500 text-white font-bold py-2 px-4 rounded"
               onClick={handleModalOpen}
             >
               Click here to view my Projects
             </button>
           </div>
         </Section>
+
+        {/* Contact Section */}
         <Section opacity={opacityLastSection}>
-          <h1 className="font-semibold font-serif text-2xl">
+          <h1 className="select-none font-semibold font-serif text-2xl">
             Contact Information
           </h1>
-          <p className="text-gray-500">
+          <p className="select-none text-gray-500">
             <a
               href="https://www.linkedin.com/in/sachin-kumar-7ab3b9216/"
               target="_blank"
@@ -114,11 +171,11 @@ export const Overlay = () => {
               Click HERE to connect with me on LinkedIn
             </a>
           </p>
-          <p className="mt-6 p-3 bg-slate-200 rounded-lg">
+          <p className="select-none mt-6 p-3 bg-slate-200 rounded-lg">
             📩 <a href="mailto:sachin43@my.yorku.ca">sachin43@my.yorku.ca</a>
           </p>
-          <p className="mt-6 p-3 bg-slate-200 rounded-lg">
-            📞 <a href="">+1 (647)-870-2736</a>
+          <p className="select-none mt-6 p-3 bg-slate-200 rounded-lg">
+            📞 +1 (647)-870-2736
           </p>
           <br />
           <p>
@@ -134,6 +191,8 @@ export const Overlay = () => {
           </p>
         </Section>
       </div>
+
+      {/* Modal */}
       {showModal && (
         <>
           <div className="fixed inset-0 bg-gray-800 bg-opacity-75"></div>
@@ -141,31 +200,23 @@ export const Overlay = () => {
             <div className="bg-white m-20 p-10 rounded shadow-lg">
               <h2 className="text-xl font-bold mb-4">Projects</h2>
               <p>
-                AutoScrape<br></br> • Created a Java-based Selenium tool for
-                automated web application tasks, including login, navigation,
-                and user-defined actions with a success rate of over 95%.
-                <br></br> • Integrated load time tracking for real-time
-                performance insights, enhancing user experience and optimization
-                efforts.<br></br> • Developed functionality to extract and
-                process webpage element information, facilitating data-driven
-                decisions.<br></br>
-                <br></br> My World Canvas<br></br>• Designed a 3-D portfolio
-                website with custom assets using Blender showcasing my creative
-                graphic design skills.<br></br> • Focused on performance
-                optimization by creating low-poly models and optimized textures,
-                enhancing loading times while maintaining visual appeal.
-                Utilized the ThreeJS library to incorporate 3D graphics
-                seamlessly into the web project..<br></br> • Implemented an
-                immersive 360-degree rotate feature using React Three Fiber,
-                allowing users to interactively explore 3D models from all
-                angles with smooth and fluid motion.<br></br> <br></br>
-                ClarisCare<br></br> • Developed a user-centric, fully responsive
-                HealthCare website with strategically placed Call-to-Action
-                buttons using Javascript, guiding users through various sections
-                of the website.<br></br> • Enhanced user experience by
-                implementing eye-catching styling designs with CSS, including
-                Dark-mode, navigation bar improvements, and parallax scroll for
-                a unique and immersive interface.
+                <strong>AutoScrape</strong>
+                <br />• Java-based Selenium tool for automated web tasks.
+                <br />• Integrated load time tracking for performance insights.
+                <br />• Extracted webpage data for analysis.
+                <br />
+                <br />
+                <strong>My World Canvas</strong>
+                <br />• Designed a 3D portfolio website using Blender and
+                Three.js.
+                <br />• Built low-poly models for performance.
+                <br />• Interactive 360° viewer with React Three Fiber.
+                <br />
+                <br />
+                <strong>ClarisCare</strong>
+                <br />• Fully responsive healthcare website.
+                <br />• Dark mode, smooth nav, parallax effects.
+                <br />• User guidance via CTA buttons.
               </p>
               <button
                 className="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded"
@@ -179,4 +230,4 @@ export const Overlay = () => {
       )}
     </Scroll>
   );
-};
+}
